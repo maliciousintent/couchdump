@@ -9,6 +9,7 @@ var CONFIG = require('config').CONFIG
   , AWS = require('aws-sdk')
   , coolog = require('coolog')
   , bytes = require('bytes')
+  , crypto = require('crypto')
   ;
 
 
@@ -25,6 +26,7 @@ var s3client = new AWS.S3()
 
 
 async.eachSeries(BACKUPS, function (item, nextItem) {
+  logger.log('\n');
   logger.log('Backup for', item.name);
   
   request({
@@ -42,10 +44,15 @@ async.eachSeries(BACKUPS, function (item, nextItem) {
       nextItem(null);
       return;
     }
-        
-    logger.log('Dumped data for', item.name, (!!item.comment) ? '(' + item.comment + ')' : '');
+    
+    var md5 = crypto.createHash('md5')
+      .update(body, 'utf8')
+      .digest('base64');
+    
+    logger.log('\t-> dumped data for', item.name, (!!item.comment) ? '(' + item.comment + ')' : '');
     logger.log('\t-> size is', bytes(body.length));
     logger.log('\t-> dump timestamp', new Date());
+    logger.log('\t-> content MD5', new Buffer(md5, 'base64').toString('hex'));
     
     var fileName = _makeKey(item.name);
     
@@ -53,6 +60,7 @@ async.eachSeries(BACKUPS, function (item, nextItem) {
       Key: fileName
     , Body: body
     , Bucket: CONFIG.AWS_BUCKET
+    , ContentMD5: md5
     , ServerSideEncryption: 'AES256'
     , ACL: 'private'
     , ContentType: 'application/json'
