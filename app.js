@@ -18,6 +18,7 @@ AWS.config.update({ region: CONFIG.AWS_REGION, accessKeyId: CONFIG.AWS_ACCESS_KE
 var s3client = new AWS.S3()
   , logger = coolog.logger('app.js')
   , countOk = 0
+  , backupSize = 0
   , countFail = 0
   , runTimestamp = new Date().toISOString()
   ;
@@ -69,6 +70,7 @@ async.eachSeries(BACKUPS, function (item, nextItem) {
       logger.log('\t-> s3 filename', fileName);
       logger.log('\t-> s3 ETag', s3resp.ETag);
       
+      backupSize = backupSize + body.length;
       countOk++;
       nextItem(null);
     });
@@ -81,7 +83,7 @@ async.eachSeries(BACKUPS, function (item, nextItem) {
   }
   
   logger.log('Backups completed:');
-  logger.log('\t-> OK', countOk, 'items');
+  logger.log('\t-> OK', countOk, 'items', '(total size: ' + bytes(backupSize) + ')');
   logger.log('\t-> Failed', countFail, 'items');
   process.exit((countFail === 0));
 });
