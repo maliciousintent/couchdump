@@ -19,6 +19,7 @@ var s3client = new AWS.S3()
   , logger = coolog.logger('app.js')
   , countOk = 0
   , countFail = 0
+  , runTimestamp = new Date().toISOString()
   ;
 
 
@@ -91,6 +92,6 @@ function _makeURL(url) {
 }
 
 function _makeKey(name) {
-  return (new Date().toISOString()) + '/' + name + '.json';
+  return runTimestamp + '/' + name + '.json';
 }
 
