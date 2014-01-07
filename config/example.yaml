@@ -1,0 +1,16 @@
+
+# Main configuration
+
+CONFIG:
+  AWS_ACCESS_KEY_ID: ''
+  AWS_SECRET_ACCESS_KEY: ''
+  AWS_REGION: 'eu-west-1'
+  AWS_BUCKET: ''
+
+# List of dbs to backup
+
+BACKUPS:
+
+  - name: mydb1
+    comment: My very important database
+    url: 'https://user:pass@couchdb.host.example.com/db_name'
