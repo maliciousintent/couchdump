@@ -15,9 +15,6 @@
   "bugs": {
     "url": "https://github.com/plasticpanda/couchdump/issues"
   },
-  /*"bin": {
-    "couchdump": "./index.js"
-  },*/
   "dependencies": {
     "config": "~0.4.34",
     "js-yaml": "~3.0.1",
