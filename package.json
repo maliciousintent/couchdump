@@ -1,0 +1,27 @@
+{
+  "name": "couchdump",
+  "version": "0.0.1",
+  "description": "couchdump =========",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/plasticpanda/couchdump.git"
+  },
+  "author": "Simone Lusenti <simone@plasticpanda.com>",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/plasticpanda/couchdump/issues"
+  },
+  "dependencies": {
+    "config": "~0.4.34",
+    "js-yaml": "~3.0.1",
+    "coolog": "~3.0.0",
+    "request": "~2.30.0",
+    "aws-sdk": "~2.0.0-rc5",
+    "async": "~0.2.9",
+    "bytes": "~0.2.1"
+  }
+}
