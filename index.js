@@ -13,6 +13,8 @@ var CONFIG = require('config').CONFIG
   ;
 
 
+var PREFIX = process.env.PREFIX || 'manual';
+
 coolog.addChannel({ name: 'root', level: 'debug', appenders: ['console'] });
 AWS.config.update({ region: CONFIG.AWS_REGION, accessKeyId: CONFIG.AWS_ACCESS_KEY_ID, secretAccessKey: CONFIG.AWS_SECRET_ACCESS_KEY, sslEnabled: true });
 
@@ -102,6 +104,6 @@ function _makeURL(url) {
 }
 
 function _makeKey(name) {
-  return runTimestamp + '/' + name + '.json';
+  return PREFIX + '-' + runTimestamp + '/' + name + '.json';
 }
 
